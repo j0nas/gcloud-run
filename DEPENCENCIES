@@ -1,0 +1,3 @@
+gcloud config set project gcloud-test-run
+gcloud services enable run.googleapis.com
+gcloud auth configure-docker
