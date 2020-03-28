@@ -11,10 +11,6 @@ steps:
     args:
       ["run", "--rm", "gcr.io/$PROJECT_ID/backend:$COMMIT_SHA", "npm", "test"]
 
-  # push the container image to Container Registry
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/$PROJECT_ID/backend:$COMMIT_SHA"]
-
   # Deploy container image to Cloud Run
   - name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -27,5 +23,3 @@ steps:
       - "europe-north1"
       - "--platform"
       - "managed"
-images:
-  - "gcr.io/$PROJECT_ID/backend:$COMMIT_SHA"
