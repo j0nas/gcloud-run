@@ -24,3 +24,4 @@ TODO:
 
 - [ ] Terraform setup for this, so that new projects can be automatically set up
 - [ ] Monitoring (e.g. through [cAdvisor](https://github.com/google/cadvisor))
+- [ ] Cache CI build step
