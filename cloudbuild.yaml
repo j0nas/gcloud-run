@@ -17,5 +17,8 @@ steps:
       - 'europe-north1'
       - '--platform'
       - 'managed'
+  - name: 'node'
+    entrypoint: 'npm'
+    args: ['test']
 images:
   - 'gcr.io/$PROJECT_ID/backend:$COMMIT_SHA'
