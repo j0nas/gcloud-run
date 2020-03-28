@@ -7,9 +7,7 @@
     "start": "node index.js",
     "start:docker": "docker run -dp 8080:8080 gcr.io/gcloud-test-run/backend",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:submit": "gcloud builds submit --tag gcr.io/gcloud-test-run/backend",
-    "build:deploy": "gcloud run deploy backend --image gcr.io/gcloud-test-run/backend --platform managed --region europe-north1 --allow-unauthenticated",
-    "build": "run-s build:*"
+    "build:manual": "gcloud builds submit --substitutions COMMIT_SHA=manual"
   },
   "keywords": [],
   "author": "Jonas Jensen <jonas.jensen@msn.com> (https://jonas-jensen.com/)",
