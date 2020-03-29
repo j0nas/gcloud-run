@@ -1,6 +1,6 @@
 provider "google" {
-  project = var.google_project_name
-  region  = var.google_region
+  project     = var.google_project_name
+  region      = var.google_region
   credentials = file("./service-account.json")
 }
 
@@ -40,8 +40,8 @@ data "google_iam_policy" "noauth" {
 }
 
 resource "google_cloud_run_service_iam_policy" "noauth" {
-  location    = google_cloud_run_service.service.location
-  service     = google_cloud_run_service.service.name
+  location = google_cloud_run_service.service.location
+  service  = google_cloud_run_service.service.name
 
   policy_data = data.google_iam_policy.noauth.policy_data
 }
