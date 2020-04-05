@@ -17,8 +17,9 @@ Region: europe-north1
 ## Google Cloud project setup
 
 1. Create your project in Google Cloud console.
-2. Set the appropriate variables in /ops/terraform/cloud-run/variables.tf
-3. `gcloud services enable cloudresourcemanager.googleapis.com`
+2. `gcloud init`
+3. Set the appropriate variables in /ops/terraform/cloud-run/variables.tf
+4. `gcloud services enable cloudresourcemanager.googleapis.com`
 
 ## Cloud Build setup
 

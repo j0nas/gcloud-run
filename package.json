@@ -9,7 +9,9 @@
     "start:docker": "docker run -dp 8080:8080 gcr.io/gcloud-test-run/backend",
     "test": "jest",
     "test:watch": "jest --watch",
-    "build:manual": "gcloud builds submit --substitutions COMMIT_SHA=manual"
+    "build:manual": "gcloud builds submit --substitutions COMMIT_SHA=manual",
+    "docker:build": "docker build -t gcr.io/gcloud-test-run/backend .",
+    "docker:push": "docker push gcr.io/gcloud-test-run/backend"
   },
   "keywords": [],
   "author": "Jonas Jensen <jonas.jensen@msn.com> (https://jonas-jensen.com/)",

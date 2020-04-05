@@ -3,4 +3,4 @@ node_modules
 coverage
 service-account.json
 .terraform*
-terraform.tfstate
+terraform.tfstate*
