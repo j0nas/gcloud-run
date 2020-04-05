@@ -14,6 +14,12 @@ Region: europe-north1
   - [x] Continuous Deployment
   - [x] Continuous Integration
 
+## Google Cloud project setup
+
+1. Create your project in Google Cloud console.
+2. Set the appropriate variables in /ops/terraform/cloud-run/variables.tf
+3. `gcloud services enable cloudresourcemanager.googleapis.com`
+
 ## Cloud Build setup
 
 1. [Service Account Settings](https://console.cloud.google.com/cloud-build/settings?_ga=2.236470785.1229268789.1585354558-2078502783.1565611039) ->
