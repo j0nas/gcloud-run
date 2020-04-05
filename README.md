@@ -20,6 +20,12 @@ Region: europe-north1
    "Cloud Run Admin": "Enabled" and "GRANT ACCESS TO ALL SERVICE ACCOUNTS"
 2. [Triggers](https://console.cloud.google.com/cloud-build/triggers) -> "Connect Repository"
 
+## Zeit.co Domains setup:
+
+1. Buy zeit.co domain
+2. Delete Zeit's SSL certificates
+3. Add "Custom Domain mapping" in GCP
+
 TODO:
 
 - [ ] Terraform setup for this, so that new projects can be automatically set up
