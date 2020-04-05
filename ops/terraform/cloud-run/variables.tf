@@ -12,3 +12,13 @@ variable "google_region" {
   description = "Which Google datacenter to use"
   default     = "europe-north1"
 }
+
+variable "domain_mappings" {
+  description = "Domain names to associate with this service"
+  # TODO: add CNAME records to Now
+  default = [
+    "dev.pictures",
+    "lol.dev.pictures",
+    "test.dev.pictures",
+  ]
+}

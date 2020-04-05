@@ -20,6 +20,7 @@ Region: europe-north1
 2. `gcloud init`
 3. Set the appropriate variables in /ops/terraform/cloud-run/variables.tf
 4. `gcloud services enable cloudresourcemanager.googleapis.com`
+5. Create a service account
 
 ## Cloud Build setup
 
@@ -32,6 +33,13 @@ Region: europe-north1
 1. Buy zeit.co domain
 2. Delete Zeit's SSL certificates
 3. Add "Custom Domain mapping" in GCP
+
+## Terraform setup
+
+1. `npmR docker:build`
+1. `npmR docker:push`
+1. [Webmaster Central](https://www.google.com/webmasters/verification/details?hl=en-GB&domain=dev.pictures)
+   -> "Add an owner" -> Add project service account
 
 TODO:
 

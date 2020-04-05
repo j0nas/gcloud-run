@@ -36,3 +36,17 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
   service  = google_cloud_run_service.default.name
   policy_data = data.google_iam_policy.noauth.policy_data
 }
+
+resource "google_cloud_run_domain_mapping" "default" {
+  count = length(var.domain_mappings)
+  location = var.google_region
+  name     = var.domain_mappings[count.index]
+
+  metadata {
+    namespace = var.google_project_id
+  }
+
+  spec {
+    route_name = google_cloud_run_service.default.name
+  }
+}
