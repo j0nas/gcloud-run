@@ -15,7 +15,6 @@ variable "google_region" {
 
 variable "domain_mappings" {
   description = "Domain names to associate with this service"
-  # TODO: add CNAME records to Now
   default = [
     "dev.pictures",
     "lol.dev.pictures",

@@ -50,3 +50,54 @@ resource "google_cloud_run_domain_mapping" "default" {
     route_name = google_cloud_run_service.default.name
   }
 }
+
+resource "google_dns_managed_zone" "default" {
+  name = "dns-zone"
+  dns_name = "dev.pictures."
+
+  dnssec_config {
+    kind = "dns#managedZoneDnsSecConfig"
+    non_existence = "nsec3"
+    state = "off"
+
+    default_key_specs {
+      algorithm = "rsasha256"
+      key_length = 2048
+      key_type = "keySigning"
+      kind = "dns#dnsKeySpec"
+    }
+
+    default_key_specs {
+      algorithm = "rsasha256"
+      key_length = 1024
+      key_type = "zoneSigning"
+      kind = "dns#dnsKeySpec"
+    }
+  }
+}
+
+resource "google_dns_record_set" "a-records" {
+  managed_zone = google_dns_managed_zone.default.name
+  name = "dev.pictures."
+  rrdatas = [
+    google_cloud_run_domain_mapping.default[0].status[0].resource_records[0].rrdata,
+    google_cloud_run_domain_mapping.default[0].status[0].resource_records[1].rrdata,
+    google_cloud_run_domain_mapping.default[0].status[0].resource_records[2].rrdata,
+    google_cloud_run_domain_mapping.default[0].status[0].resource_records[3].rrdata,
+  ]
+  type = google_cloud_run_domain_mapping.default[0].status[0].resource_records[0].type
+  ttl = 300
+}
+
+resource "google_dns_record_set" "aaaa-records" {
+  managed_zone = google_dns_managed_zone.default.name
+  name = "${var.domain_mappings[0]}." # TODO: map var.domain_mappings
+  rrdatas = [
+    google_cloud_run_domain_mapping.default[0].status[0].resource_records[4].rrdata,
+    google_cloud_run_domain_mapping.default[0].status[0].resource_records[5].rrdata,
+    google_cloud_run_domain_mapping.default[0].status[0].resource_records[6].rrdata,
+    google_cloud_run_domain_mapping.default[0].status[0].resource_records[7].rrdata,
+  ]
+  type = google_cloud_run_domain_mapping.default[0].status[0].resource_records[4].type
+  ttl = 300
+}
