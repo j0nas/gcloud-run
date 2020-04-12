@@ -5,6 +5,11 @@ variable "google_project_id" {
 
 variable "google_service_name" {
   description = "Name of the service to use"
+  default     = "backend-jonas"
+}
+
+variable "google_service_container_name" {
+  description = "Name of the service to use"
   default     = "backend"
 }
 
@@ -16,8 +21,8 @@ variable "google_region" {
 variable "domain_mappings" {
   description = "Domain names to associate with this service"
   default = [
-    "dev.pictures",
-    "lol.dev.pictures",
-    "test.dev.pictures",
+    "jonas.fun",
+    "lol.jonas.fun",
+    "test.jonas.fun",
   ]
 }

@@ -11,7 +11,7 @@ resource "google_cloud_run_service" "default" {
   template {
     spec {
       containers {
-        image = "gcr.io/${var.google_project_id}/${var.google_service_name}"
+        image = "gcr.io/${var.google_project_id}/${var.google_service_container_name}"
       }
     }
   }
@@ -52,33 +52,13 @@ resource "google_cloud_run_domain_mapping" "default" {
 }
 
 resource "google_dns_managed_zone" "default" {
-  name = "dns-zone"
-  dns_name = "dev.pictures."
-
-  dnssec_config {
-    kind = "dns#managedZoneDnsSecConfig"
-    non_existence = "nsec3"
-    state = "off"
-
-    default_key_specs {
-      algorithm = "rsasha256"
-      key_length = 2048
-      key_type = "keySigning"
-      kind = "dns#dnsKeySpec"
-    }
-
-    default_key_specs {
-      algorithm = "rsasha256"
-      key_length = 1024
-      key_type = "zoneSigning"
-      kind = "dns#dnsKeySpec"
-    }
-  }
+  name = "dns-zone-for-${replace(var.domain_mappings[0], ".", "-")}"
+  dns_name = "${var.domain_mappings[0]}."
 }
 
 resource "google_dns_record_set" "a-records" {
   managed_zone = google_dns_managed_zone.default.name
-  name = "dev.pictures."
+  name = "${var.domain_mappings[0]}."
   rrdatas = [
     google_cloud_run_domain_mapping.default[0].status[0].resource_records[0].rrdata,
     google_cloud_run_domain_mapping.default[0].status[0].resource_records[1].rrdata,

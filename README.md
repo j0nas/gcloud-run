@@ -39,10 +39,16 @@ Region: europe-north1
 1. `npmR docker:build`
 1. `npmR docker:push`
 1. [Webmaster Central](https://www.google.com/webmasters/verification/details?hl=en-GB&domain=dev.pictures)
-   -> "Add an owner" -> Add project service account
+   verify domain ownership with TXT record -> "Add an owner" -> Add project service account
+
+Then
+
+- run `cd ./ops/terraform && ./tf.sh apply cloud-run`
+- go to the created DNS zone and view zone details, click "Registrar Setup" in top-right corner
+- Set the domain's nameserver to use Google's servers by copying over the shown addresses
 
 TODO:
 
 - [ ] Terraform setup for this, so that new projects can be automatically set up
-- [ ] Monitoring (e.g. through [cAdvisor](https://github.com/google/cadvisor))
+- [ ] Monitoring (e.g. through [cAdvisor](https://github.com/google/cadvisor) or Datadog?)
 - [ ] Cache CI build step
