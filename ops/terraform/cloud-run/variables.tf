@@ -19,7 +19,7 @@ variable "google_region" {
 }
 
 variable "domain_mappings" {
-  description = "Domain names to associate with this service"
+  description = "Domain names to associate with this service. Firsty entry must be the apex domain."
   default = [
     "jonas.fun",
     "lol.jonas.fun",

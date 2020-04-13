@@ -71,7 +71,7 @@ resource "google_dns_record_set" "a-records" {
 
 resource "google_dns_record_set" "aaaa-records" {
   managed_zone = google_dns_managed_zone.default.name
-  name = "${var.domain_mappings[0]}." # TODO: map var.domain_mappings
+  name = "${var.domain_mappings[0]}."
   rrdatas = [
     google_cloud_run_domain_mapping.default[0].status[0].resource_records[4].rrdata,
     google_cloud_run_domain_mapping.default[0].status[0].resource_records[5].rrdata,
@@ -79,5 +79,16 @@ resource "google_dns_record_set" "aaaa-records" {
     google_cloud_run_domain_mapping.default[0].status[0].resource_records[7].rrdata,
   ]
   type = google_cloud_run_domain_mapping.default[0].status[0].resource_records[4].type
+  ttl = 300
+}
+
+resource "google_dns_record_set" "cname-records" {
+  count = length(var.domain_mappings) - 1
+  managed_zone = google_dns_managed_zone.default.name
+  name = "${var.domain_mappings[count.index + 1]}."
+  rrdatas = [
+    google_cloud_run_domain_mapping.default[count.index + 1].status[0].resource_records[0].rrdata
+  ]
+  type = google_cloud_run_domain_mapping.default[count.index + 1].status[0].resource_records[0].type
   ttl = 300
 }
