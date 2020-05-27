@@ -10,9 +10,19 @@ Region: europe-north1
 ## Features
 
 - [x] Cloud Run project
+  - [x] Set up with Terraform
+  - [x] Accessible via [jonas.fun](jonas.fun)
+  - [x] [Subdomains support](lol.jonas.fun)
 - [x] Cloud Build
-  - [x] Continuous Deployment
   - [x] Continuous Integration
+  - [x] Continuous Deployment
+
+### Features included in Cloud Run
+
+- SSL certificates
+- "Blue/green" zero-downtime deploys
+- Autoscaling, from zero instances
+- Increased security and lower maintenance vs. traditional VMs
 
 ## Google Cloud project setup
 
