@@ -92,3 +92,11 @@ resource "google_dns_record_set" "cname-records" {
   type = google_cloud_run_domain_mapping.default[count.index + 1].status[0].resource_records[0].type
   ttl = 300
 }
+
+resource "google_dns_record_set" "txt-records" {
+  managed_zone = google_dns_managed_zone.default.name
+  name = "${var.domain_mappings[0]}."
+  type = "TXT"
+  rrdatas = [var.google_site_verification_record]
+  ttl = 300
+}
