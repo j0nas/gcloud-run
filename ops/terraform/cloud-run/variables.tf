@@ -5,7 +5,7 @@ variable "google_project_id" {
 
 variable "google_service_name" {
   description = "Name of the service to use"
-  default     = "backend"
+  default     = "backend-jonas"
 }
 
 variable "google_service_container_name" {
