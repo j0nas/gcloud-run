@@ -51,8 +51,14 @@ Then
 - go to the created DNS zone and view zone details, click "Registrar Setup" in top-right corner
 - Set the domain's nameserver to use Google's servers by copying over the shown addresses
 
+## Domain name
+
+The name server of the domain in question must point to the same name servers
+as those in the created Google DNS zone.
+
 TODO:
 
+- [ ] Find some way for the created DNS zone to not change name servers between creations
 - [ ] Terraform setup for this, so that new projects can be automatically set up
 - [ ] Monitoring (e.g. through [cAdvisor](https://github.com/google/cadvisor) or Datadog?)
 - [ ] Cache CI build step

@@ -7,6 +7,7 @@ provider "google" {
 resource "google_cloud_run_service" "default" {
   name     = var.google_service_name
   location = var.google_region
+  autogenerate_revision_name = true
 
   template {
     spec {
@@ -51,35 +52,35 @@ resource "google_cloud_run_domain_mapping" "default" {
   }
 }
 
+locals {
+  apex_domain = var.domain_mappings[0]
+  dns_records = {
+    "A" = [
+      for rr in google_cloud_run_domain_mapping.default[0].status[0].resource_records :
+      rr.rrdata if rr.type == "A"
+    ]
+    "AAAA" = [
+      for rr in google_cloud_run_domain_mapping.default[0].status[0].resource_records :
+      rr.rrdata if rr.type == "AAAA"
+    ]
+    "TXT" = [
+      var.google_site_verification_record
+    ]
+  }
+}
+
 resource "google_dns_managed_zone" "default" {
-  name = "dns-zone-for-${replace(var.domain_mappings[0], ".", "-")}"
-  dns_name = "${var.domain_mappings[0]}."
+  name = "dns-zone-for-${replace(local.apex_domain, ".", "-")}"
+  dns_name = "${local.apex_domain}."
 }
 
-resource "google_dns_record_set" "a-records" {
+resource "google_dns_record_set" "default" {
+  for_each = local.dns_records
   managed_zone = google_dns_managed_zone.default.name
-  name = "${var.domain_mappings[0]}."
-  rrdatas = [
-    google_cloud_run_domain_mapping.default[0].status[0].resource_records[0].rrdata,
-    google_cloud_run_domain_mapping.default[0].status[0].resource_records[1].rrdata,
-    google_cloud_run_domain_mapping.default[0].status[0].resource_records[2].rrdata,
-    google_cloud_run_domain_mapping.default[0].status[0].resource_records[3].rrdata,
-  ]
-  type = google_cloud_run_domain_mapping.default[0].status[0].resource_records[0].type
-  ttl = 300
-}
-
-resource "google_dns_record_set" "aaaa-records" {
-  managed_zone = google_dns_managed_zone.default.name
-  name = "${var.domain_mappings[0]}."
-  rrdatas = [
-    google_cloud_run_domain_mapping.default[0].status[0].resource_records[4].rrdata,
-    google_cloud_run_domain_mapping.default[0].status[0].resource_records[5].rrdata,
-    google_cloud_run_domain_mapping.default[0].status[0].resource_records[6].rrdata,
-    google_cloud_run_domain_mapping.default[0].status[0].resource_records[7].rrdata,
-  ]
-  type = google_cloud_run_domain_mapping.default[0].status[0].resource_records[4].type
-  ttl = 300
+  name    = "${local.apex_domain}."
+  ttl     = 300
+  type    = each.key
+  rrdatas = each.value
 }
 
 resource "google_dns_record_set" "cname-records" {
@@ -90,13 +91,5 @@ resource "google_dns_record_set" "cname-records" {
     google_cloud_run_domain_mapping.default[count.index + 1].status[0].resource_records[0].rrdata
   ]
   type = google_cloud_run_domain_mapping.default[count.index + 1].status[0].resource_records[0].type
-  ttl = 300
-}
-
-resource "google_dns_record_set" "txt-records" {
-  managed_zone = google_dns_managed_zone.default.name
-  name = "${var.domain_mappings[0]}."
-  type = "TXT"
-  rrdatas = [var.google_site_verification_record]
   ttl = 300
 }

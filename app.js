@@ -7,7 +7,7 @@ app.get("/", (req, res) => {
   res.send(
     `The current time is ${Date().toLocaleString()}. 
     Serving request from ${req.headers.host}.
-    Test.`
+    Test2.`
   );
 });
 
